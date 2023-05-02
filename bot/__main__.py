@@ -24,9 +24,9 @@ from bot import config_dict, botStartTime, Interval, QbInterval, LOGGER, DATABAS
                 app, main_loop
 from .modules import authorize, list, cancel_mirror, mirror_status, mirror_leech, clone, ytdlp, shell, eval, bot_settings, \
                      delete, count, users_settings, search, rss, wayback, speedtest, anilist, imdb, bt_select, mediainfo, hash, \
-                     scraper, pictures, save_msg, sel_cat
+                     scraper, pictures, save_msg, sel_cat, broadcast, drive_clean, users
 
-version = "5.0.0"
+version = "5.0.1"
 
 def progress_bar(percentage):
     p_used = config_dict['FINISHED_PROGRESS_STR']
@@ -364,7 +364,9 @@ if config_dict['SET_BOT_COMMANDS']:
         (f'{BotCommands.PingCommand}','Ping the bot'),
         (f'{BotCommands.RestartCommand}','Restart the bot'),
         (f'{BotCommands.LogCommand}','Get the bot Log'),
-        (f'{BotCommands.HelpCommand}','Get detailed help')
+        (f'{BotCommands.HelpCommand}','Get detailed help'),
+        (f'{BotCommands.LimitCommand}','Get Bot Limitation')
+
     ]
 
 
