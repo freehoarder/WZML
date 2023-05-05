@@ -251,8 +251,11 @@ def get_readable_message():
                 globals()['COUNT'] -= int(STATUS_LIMIT)
                 globals()['PAGE_NO'] -= 1
         for index, download in enumerate(list(download_dict.values())[int(COUNT):], start=1):
-            msg += f"<b><a href='{download.message.link}'>{download.status()}</a>: </b>"
-            msg += f"<code>{escape(str(download.name()))}</code>"
+            if config_dict['SAFE_MODE']:
+                msg += f"<b>{download.status()}: Safe Mode Enabled</b>"
+            else:
+                msg += f"<b><a href='{download.message.link}'>{download.status()}</a>: </b>"
+                msg += f"<code>{escape(str(download.name()))}</code>"
             if download.status() not in [MirrorStatus.STATUS_SEEDING, MirrorStatus.STATUS_SPLITTING, MirrorStatus.STATUS_CONVERTING, MirrorStatus.STATUS_QUEUEDL, MirrorStatus.STATUS_QUEUEUP]:
                 if config_dict['EMOJI_THEME']:
                     msg += f"\n<b></b>{get_progress_bar_string(download)} {download.progress()}"
@@ -359,12 +362,12 @@ def get_readable_message():
         if config_dict['EMOJI_THEME']:
             bmsg = f"🖥 {TASKS_COUNT}"
             bmsg += f"<b>🖥 CPU:</b> {cpu_percent()}% | <b>💿 FREE:</b> {get_readable_file_size(disk_usage(DOWNLOAD_DIR).free)}"
-            bmsg += f"\n<b>🎮 RAM:</b> {virtual_memory().percent}% | <b>🟢 UPTIME:</b> {get_readable_time(time() - botStartTime)}"
+            bmsg += f"\n<b>🎮 RAM:</b> {virtual_memory().percent}% | <b>🟢 UP:</b> {get_readable_time(time() - botStartTime)}"
             bmsg += f"\n<b>🔽 DL:</b> {get_readable_file_size(dl_speed)}/s | <b>🔼 UL:</b> {get_readable_file_size(up_speed)}/s\n\n"
         else:
             bmsg = f"{TASKS_COUNT}"
             bmsg += f"<b>CPU:</b> {cpu_percent()}% | <b>FREE:</b> {get_readable_file_size(disk_usage(DOWNLOAD_DIR).free)}"
-            bmsg += f"\n<b>RAM:</b> {virtual_memory().percent}% | <b>UPTIME:</b> {get_readable_time(time() - botStartTime)}"
+            bmsg += f"\n<b>RAM:</b> {virtual_memory().percent}% | <b>UP:</b> {get_readable_time(time() - botStartTime)}"
             bmsg += f"\n<b>DL:</b> {get_readable_file_size(dl_speed)}/s | <b>UL:</b> {get_readable_file_size(up_speed)}/s\n\n"
 
         buttons = ButtonMaker()
